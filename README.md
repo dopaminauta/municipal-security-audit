@@ -26,12 +26,14 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 | Severity | Count | Category |
 |----------|:-----:|----------|
-| 🟡 Medium (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
-| ⚪ Compliance Observation | 1 | Cross-border health data hosting — regulatory risk, no CVSS |
+| 🔴 **Stack CRITICAL (CVSS 9.0–10.0)** | **2** | CVE-2022-24816 (10.0) & CVE-2024-36401 (9.8) — unauthenticated RCE on GeoServer |
+| 🔴 Stack HIGH (CVSS 7.0–8.9) | 1 | CVE-2024-38473 (8.1) — Apache HTTPd |
+| 🟡 Verified (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
 | 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
+| ⚪ Compliance | 1 | Cross-border health data hosting — regulatory risk |
 | 🟢 Info | 1 | Missing HTTP security headers (9 total) |
 
-**⚠️ Stack-level risk:** The technology stack carries **known CRITICAL CVEs** (CVE-2022-24816: **CVSS 10.0**, CVE-2024-36401: **CVSS 9.8**) — unauthenticated RCE vectors on the GeoServer instance. 18 CVEs evaluated in total.
+**18 CVEs evaluated** across GeoServer + Jetty + Apache + Postfix stack. Multiple CRITICAL RCE vectors identified via version fingerprinting.
 
 **Most Significant:** A critically outdated GeoServer instance (unpatched since 2017) with **12 documented CVEs** including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** exposed an unauthenticated WFS endpoint allowing bulk download of the municipal geospatial database.
 
