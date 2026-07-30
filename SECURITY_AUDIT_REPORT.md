@@ -16,7 +16,7 @@
 
 An external security assessment was conducted on the web infrastructure of a municipal government entity using exclusively passive OSINT techniques and non-intrusive scanning. **No exploits were executed. No systems were accessed. No data was modified. No sensitive information was extracted.**
 
-The assessment identified **15 subdomains**, **6 IP addresses**, and **6 findings** — **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
+The assessment identified **15 subdomains**, **7 IP addresses**, and **6 findings** — **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
 
 ⚠️ **Critical context:** The technology stack runs on software versions with **several known critical CVEs** — including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — representing unauthenticated remote code execution vectors confirmed applicable via version fingerprinting. A total of **18 CVEs were screened** across the GeoServer + Jetty + Apache + Postfix stack. While these were not exploited during this passive assessment, their presence significantly elevates the risk profile of the exposed endpoints if left unpatched.
 

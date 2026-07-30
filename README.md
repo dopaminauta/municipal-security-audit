@@ -95,7 +95,7 @@ This case study follows **Coordinated Vulnerability Disclosure (CVD)** as descri
 | Metric | Value |
 |--------|:-----:|
 | Subdomains Discovered | 15 |
-| IP Addresses Identified | 6 |
+| IP Addresses Identified | 7 |
 | Technologies Fingerprinted | 7 (Apache, nginx, Jetty, GeoServer, Postfix, ASP.NET, React/Vite) |
 | CVEs Evaluated | 18 |
 | Findings Documented | 6 |
