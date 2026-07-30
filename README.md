@@ -26,7 +26,8 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 | Severity | Count | Category |
 |----------|:-----:|----------|
-| ⚠️ Unconfirmed CVE Exposure (version-matched) | 3 | CVE-2022-24816 (10.0), CVE-2024-36401 (9.8), CVE-2024-38473 (8.1) — GeoServer & Apache RCE vectors, not exploited |
+| ⚠️ Unconfirmed CVE Exposure (version-matched) | 4 | CVE-2022-24816 (10.0), CVE-2024-36401 (9.8), CVE-2023-35042 (9.8), CVE-2023-25157 (9.8) — GeoServer RCE & SQLi vectors, not exploited |
+| ⚠️ Potentially Applicable CVE | 1 | CVE-2024-38473 (8.1) — Apache HTTPd, version range overlap, unconfirmed |
 | 🟡 Verified Finding (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
 | 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
 | ⚪ Compliance Observation | 1 | Cross-border health data hosting — regulatory risk |
@@ -94,7 +95,7 @@ This case study follows **Coordinated Vulnerability Disclosure (CVD)** as descri
 | Metric | Value |
 |--------|:-----:|
 | Subdomains Discovered | 15 |
-| IP Addresses Identified | 5 |
+| IP Addresses Identified | 6 |
 | Technologies Fingerprinted | 7 (Apache, nginx, Jetty, GeoServer, PostgreSQL, ASP.NET, React/Vite) |
 | CVEs Evaluated | 18 |
 | Findings Documented | 6 |

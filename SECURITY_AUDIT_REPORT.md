@@ -262,7 +262,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 | CVE-2022-24816 | GeoServer JAI-EXT | 10.0 | Version match — not exploited |
 | CVE-2024-38473 | Apache HTTPd | 8.1 | Potentially applicable |
 
-> **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were screened against the technology stack; the 5 listed above represent those with confirmed version matches against the deployed software.
+> **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were screened against the technology stack; the 4 listed as "Version match" above represent those with confirmed version matches against the deployed software. CVE-2024-38473 is listed as "Potentially applicable" (version range overlap, unconfirmed).
 
 ---
 
