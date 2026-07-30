@@ -154,7 +154,7 @@ A health records management system handling sensitive citizen data is hosted on 
 
 ---
 
-### 🟡 FINDING 4 — MEDIUM: Internal Infrastructure Information Leak via Error Messages
+### FINDING 4 — Internal Infrastructure Information Leak via Error Messages
 
 | Field | Detail |
 |-------|--------|
@@ -179,7 +179,7 @@ GeoServer WFS error responses expose internal infrastructure details including:
 
 ---
 
-### 🟡 FINDING 5 — MEDIUM: Session Cookies Missing Security Attributes
+### FINDING 5 — Session Cookies Missing Security Attributes
 
 | Field | Detail |
 |-------|--------|
@@ -203,7 +203,7 @@ jetty.httpConfig.sameSite=Lax
 
 ---
 
-### 🟢 FINDING 6 — LOW: Missing HTTP Security Headers
+### FINDING 6 — Missing HTTP Security Headers
 
 | Field | Detail |
 |-------|--------|
