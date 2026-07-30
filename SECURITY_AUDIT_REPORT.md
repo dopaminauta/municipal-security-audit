@@ -8,7 +8,7 @@
 **Reviewed by:** AI-assisted Quality Assurance  
 **Classification:** Public Portfolio — Case Study (fictionalized for confidentiality)
 
-> ⚠️ **Disclaimer:** This report is a fictionalized case study based on a real security assessment. All domain names, IP addresses, service names, internal hostnames, geographic data layers, and technical identifiers have been replaced with synthetic placeholders to protect the confidentiality of the assessed organization. This document follows Coordinated Vulnerability Disclosure (CVD) principles as described in *Gray Hat Hacking, 6th Edition*. No real infrastructure details, exploit paths, or sensitive data are disclosed.
+> ⚠️ **Disclaimer:** This report is a fictionalized case study based on an unsolicited good-faith external security assessment. All domain names, IP addresses, service names, internal hostnames, geographic data layers, and technical identifiers have been replaced with synthetic placeholders to protect the confidentiality of the assessed organization. This document follows Coordinated Vulnerability Disclosure (CVD) principles as described in *Gray Hat Hacking, 6th Edition*. No real infrastructure details, exploit paths, or sensitive data are disclosed.
 
 ---
 
@@ -16,9 +16,9 @@
 
 An external security assessment was conducted on the web infrastructure of a municipal government entity using exclusively passive OSINT techniques and non-intrusive scanning. **No exploits were executed. No systems were accessed. No data was modified. No sensitive information was extracted.**
 
-The assessment identified **15 subdomains**, **5 IP addresses**, and **6 security findings**, of which **3 are of critical/high severity**.
+The assessment identified **15 subdomains**, **5 IP addresses**, and **6 findings** — **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
 
-The most significant finding involves an **unauthenticated GeoServer WFS endpoint** exposing a geospatial database layer containing municipal records spanning over three decades — freely accessible to anyone on the internet without authentication.
+The most significant finding involves an **unauthenticated GeoServer WFS endpoint** exposing a geospatial database layer containing municipal records spanning multiple decades — freely accessible to anyone on the internet without authentication.
 
 ---
 
@@ -47,13 +47,13 @@ The most significant finding involves an **unauthenticated GeoServer WFS endpoin
 | 6 | `mail.target-municipal.example` | Webmail | Apache |
 | 7 | `smtp.target-municipal.example` | SMTP | Postfix |
 | 8-9 | `ns1/ns2.target-municipal.example` | DNS | `203.0.113.10` |
-| 10-15 | Additional cultural/campaign subdomains | Various | Apache, nginx |
+| 10-15 | Additional public-facing subdomains | Various | Apache, nginx |
 
 ---
 
 ## 3. Security Findings
 
-### 🔴 FINDING 1 — CRITICAL: Unauthenticated GeoServer WFS Endpoint — Geospatial Database Exposure
+### FINDING 1 — Unauthenticated GeoServer WFS Endpoint — Geospatial Database Exposure
 
 | Field | Detail |
 |-------|--------|
@@ -70,7 +70,7 @@ The GeoServer WFS (Web Feature Service) endpoint exposes a municipal records lay
 
 - Record identifiers and registration dates
 - Precise GPS geo-spatial polygons for each record
-- Records spanning from the late 1980s to present day
+- Records spanning multiple decades
 
 **Impact:** Any internet user can download the complete municipal geospatial database without authentication, including property-level geographic data. While cadastral information may be public record, bulk unauthenticated download bypasses intended access controls and enables mass data harvesting.
 
@@ -96,7 +96,7 @@ typeName=municipal_records:sensitive_layer" | wc -c
 
 ---
 
-### 🟠 FINDING 2 — HIGH: CORS Misconfiguration on Production API
+### FINDING 2 — CORS Misconfiguration on Production API
 
 | Field | Detail |
 |-------|--------|
@@ -132,11 +132,11 @@ curl -sI -H "Origin: https://attacker.example" \
 
 ---
 
-### 🟠 FINDING 3 — HIGH: Sensitive Data System Hosted Outside National Jurisdiction
+### FINDING 3 — [Compliance Observation] Sensitive Data System Hosted Outside National Jurisdiction
 
 | Field | Detail |
 |-------|--------|
-| **Severity** | N/A (Compliance / Regulatory Risk) |
+| **Severity** | N/A — Compliance / Regulatory Observation (no CVSS) |
 | **Location** | `health.target-municipal.example` |
 | **Technology** | nginx + ASP.NET |
 
@@ -144,7 +144,7 @@ curl -sI -H "Origin: https://attacker.example" \
 
 **Description:**
 
-A health records management system handling sensitive citizen data is hosted on infrastructure located in a foreign jurisdiction (US-based datacenter). Under many national data protection frameworks, health data is classified as "sensitive personal data" subject to stricter handling requirements, including data residency or sovereignty considerations.
+A health records management system handling sensitive citizen data is hosted on infrastructure located in a foreign jurisdiction. Under many national data protection frameworks, health data is classified as "sensitive personal data" subject to stricter handling requirements, including data residency or sovereignty considerations.
 
 **Remediation:**
 1. Conduct a legal review of applicable data protection regulations regarding cross-border health data hosting
@@ -258,7 +258,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 | CVE-2023-35042 | GeoServer RCE | 9.8 | Version match — not exploited |
 | CVE-2023-25157 | GeoServer SQLi | 9.8 | Version match — not exploited |
 | CVE-2022-24816 | GeoServer JAI-EXT | 10.0 | Version match — not exploited |
-| CVE-2024-38473 | Apache HTTPd | 8.6 | Potentially applicable |
+| CVE-2024-38473 | Apache HTTPd | 8.1 | Potentially applicable |
 
 > **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were evaluated against the technology stack.
 
@@ -288,7 +288,22 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 
 ---
 
-## 7. Limitations
+## 7. Disclosure Timeline
+
+This assessment followed **Coordinated Vulnerability Disclosure (CVD)** best practices:
+
+| Date | Event |
+|------|-------|
+| Day 0 | Passive reconnaissance and vulnerability assessment completed |
+| Day 1 | Confidential report delivered to system owner with full technical details |
+| Day 2 | Acknowledgment received; remediation window opened (standard 90-day CVD window) |
+| Post-remediation | Public case study published with all identifiers replaced by synthetic data |
+
+> **Note:** Timeline dates are generalized to protect the assessed organization's identity. The original confidential report contained complete technical details, affected endpoints, and remediation guidance. This public version was published only after a responsible disclosure window had elapsed.
+
+---
+
+## 8. Limitations
 
 - **External Assessment Only:** No internal network testing was performed
 - **Passive Methodology:** All findings based on publicly available information and non-intrusive fingerprinting
@@ -297,7 +312,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 
 ---
 
-## 8. References
+## 9. References
 
 - OWASP Testing Guide v4: https://owasp.org/www-project-web-security-testing-guide/
 - NIST SP 800-115 — Technical Guide to Information Security Testing and Assessment

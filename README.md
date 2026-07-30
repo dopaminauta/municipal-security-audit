@@ -1,14 +1,14 @@
 # 🔐 External Security Assessment — Municipal Web Infrastructure (Case Study)
 
-[![Assessment Type](https://img.shields.io/badge/assessment-passive%20OSINT-blue)](https://github.com/axelyd/municipal-security-audit)
-[![Methodology](https://img.shields.io/badge/disclosure-coordinated%20CVD-green)](https://github.com/axelyd/municipal-security-audit)
-[![Exploitation](https://img.shields.io/badge/exploitation-none-brightgreen)](https://github.com/axelyd/municipal-security-audit)
-[![Review](https://img.shields.io/badge/review-ethical%20QA%20gate-purple)](https://github.com/axelyd/municipal-security-audit)
-[![Status](https://img.shields.io/badge/status-case%20study-orange)](https://github.com/axelyd/municipal-security-audit)
+[![Assessment Type](https://img.shields.io/badge/assessment-passive%20OSINT-blue)](https://github.com/dopaminauta/municipal-security-audit)
+[![Methodology](https://img.shields.io/badge/disclosure-coordinated%20CVD-green)](https://github.com/dopaminauta/municipal-security-audit)
+[![Exploitation](https://img.shields.io/badge/exploitation-none-brightgreen)](https://github.com/dopaminauta/municipal-security-audit)
+[![Review](https://img.shields.io/badge/review-ethical%20QA%20gate-purple)](https://github.com/dopaminauta/municipal-security-audit)
+[![Status](https://img.shields.io/badge/status-case%20study-orange)](https://github.com/dopaminauta/municipal-security-audit)
 
 **Security assessment case study** — demonstrating real-world vulnerability research, OSINT methodology, and responsible disclosure practices.
 
-> ⚠️ **Important:** This repository contains a **fictionalized case study** based on a real security assessment, prepared for professional portfolio purposes. All technical information, domain names, IP addresses, service identifiers, geographic data layers, internal hostnames, and attack vectors have been **replaced with synthetic or simulated data** to protect the confidentiality of the assessed organization, in accordance with Coordinated Vulnerability Disclosure (CVD) principles.
+> ⚠️ **Important:** This repository contains a **fictionalized case study** based on an unsolicited good-faith external security assessment, prepared for professional portfolio purposes. All technical information, domain names, IP addresses, service identifiers, geographic data layers, internal hostnames, and attack vectors have been **replaced with synthetic or simulated data** to protect the confidentiality of the assessed organization, in accordance with Coordinated Vulnerability Disclosure (CVD) principles. The original confidential report was delivered to the system owner and a standard CVD remediation window elapsed before publication.
 
 ---
 
@@ -26,11 +26,12 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 | Severity | Count | Category |
 |----------|:-----:|----------|
-| 🔴 Critical/High | 3 | Unauthenticated data exposure, CORS misconfiguration, cross-border data compliance |
-| 🟡 Medium | 2 | Information leakage via errors, insecure cookie configuration |
-| 🟢 Low/Info | 1 | Missing HTTP security headers (9 total) |
+| 🟡 Medium (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
+| ⚪ Compliance Observation | 1 | Cross-border health data hosting — regulatory risk, no CVSS |
+| 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
+| 🟢 Info | 1 | Missing HTTP security headers (9 total) |
 
-**Most Significant:** An unauthenticated GeoServer WFS endpoint allowed bulk download of a municipal geospatial database — with records spanning 35+ years — to any internet user without credentials.
+**Most Significant:** An unauthenticated GeoServer WFS endpoint allowed bulk download of a municipal geospatial database — with records spanning multiple decades — to any internet user without credentials.
 
 ---
 
