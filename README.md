@@ -26,16 +26,15 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 | Severity | Count | Category |
 |----------|:-----:|----------|
-| 🔴 **Stack CRITICAL (CVSS 9.0–10.0)** | **2** | CVE-2022-24816 (10.0) & CVE-2024-36401 (9.8) — unauthenticated RCE on GeoServer |
-| 🔴 Stack HIGH (CVSS 7.0–8.9) | 1 | CVE-2024-38473 (8.1) — Apache HTTPd |
-| 🟡 Verified (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
+| ⚠️ Unconfirmed CVE Exposure (version-matched) | 3 | CVE-2022-24816 (10.0), CVE-2024-36401 (9.8), CVE-2024-38473 (8.1) — GeoServer & Apache RCE vectors, not exploited |
+| 🟡 Verified Finding (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
 | 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
-| ⚪ Compliance | 1 | Cross-border health data hosting — regulatory risk |
+| ⚪ Compliance Observation | 1 | Cross-border health data hosting — regulatory risk |
 | 🟢 Info | 1 | Missing HTTP security headers (9 total) |
 
-**18 CVEs evaluated** across GeoServer + Jetty + Apache + Postfix stack. Multiple CRITICAL RCE vectors identified via version fingerprinting.
+**18 CVEs screened** via version fingerprinting across GeoServer + Jetty + Apache + Postfix. Multiple RCE vectors identified in the deployed software stack (not exploited — applicability confirmed via version match only).
 
-**Most Significant:** A critically outdated GeoServer instance (unpatched since 2017) with **12 documented CVEs** including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** exposed an unauthenticated WFS endpoint allowing bulk download of the municipal geospatial database.
+**Most Significant:** A severely outdated GeoServer instance (unpatched since 2017) exposed an unauthenticated WFS endpoint allowing bulk download of the municipal geospatial database. The deployed software version carries several documented CVEs including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — unauthenticated RCE vectors confirmed applicable via version fingerprinting, though not exploited during this passive assessment.
 
 ---
 

@@ -18,9 +18,9 @@ An external security assessment was conducted on the web infrastructure of a mun
 
 The assessment identified **15 subdomains**, **5 IP addresses**, and **6 findings** — **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
 
-⚠️ **Critical context:** The technology stack runs on software versions with **known critical CVEs** — including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — representing unauthenticated remote code execution vectors. A total of **18 CVEs** were evaluated, with multiple CRITICAL (≥9.0) matches against the deployed versions. While these were not exploited during this passive assessment, their presence elevates the risk of the exposed WFS endpoint from "medium" to **potentially catastrophic** if left unpatched.
+⚠️ **Critical context:** The technology stack runs on software versions with **several known critical CVEs** — including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — representing unauthenticated remote code execution vectors confirmed applicable via version fingerprinting. A total of **18 CVEs were screened** across the GeoServer + Jetty + Apache + Postfix stack. While these were not exploited during this passive assessment, their presence significantly elevates the risk profile of the exposed endpoints if left unpatched.
 
-The most significant finding involves a **critically outdated GeoServer instance (deployed 2015–2017, unpatched)**. The WFS endpoint is exposed without authentication, allowing bulk download of municipal records spanning multiple decades. The underlying software version carries **12 documented CVEs**, including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** and **CVE-2024-36401 (CVSS 9.8 — unauthenticated RCE via XPath injection)** — any of which could grant an attacker full server takeover.
+The most significant finding involves a **severely outdated GeoServer instance (deployed 2015–2017, unpatched)**. The WFS endpoint is exposed without authentication, allowing bulk download of municipal records spanning multiple decades. The underlying software version carries **several documented CVEs**, including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** and **CVE-2024-36401 (CVSS 9.8 — unauthenticated RCE via XPath injection)** — both confirmed applicable to the deployed version via fingerprinting, though not exploited. If exploited, any of these could grant an attacker full server takeover.
 
 ---
 
@@ -262,7 +262,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 | CVE-2022-24816 | GeoServer JAI-EXT | 10.0 | Version match — not exploited |
 | CVE-2024-38473 | Apache HTTPd | 8.1 | Potentially applicable |
 
-> **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were evaluated against the technology stack.
+> **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were screened against the technology stack; the 5 listed above represent those with confirmed version matches against the deployed software.
 
 ---
 
