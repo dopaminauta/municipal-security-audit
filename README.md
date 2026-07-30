@@ -31,7 +31,9 @@ A detailed confidential report was delivered to the system owner prior to the pu
 | 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
 | 🟢 Info | 1 | Missing HTTP security headers (9 total) |
 
-**Most Significant:** An unauthenticated GeoServer WFS endpoint allowed bulk download of a municipal geospatial database — with records spanning multiple decades — to any internet user without credentials.
+**⚠️ Stack-level risk:** The technology stack carries **known CRITICAL CVEs** (CVE-2022-24816: **CVSS 10.0**, CVE-2024-36401: **CVSS 9.8**) — unauthenticated RCE vectors on the GeoServer instance. 18 CVEs evaluated in total.
+
+**Most Significant:** A critically outdated GeoServer instance (unpatched since 2017) with **12 documented CVEs** including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** exposed an unauthenticated WFS endpoint allowing bulk download of the municipal geospatial database.
 
 ---
 
