@@ -8,7 +8,7 @@
 **Reviewed by:** AI-assisted Quality Assurance  
 **Classification:** Public Portfolio — Case Study (fictionalized for confidentiality)
 
-> ⚠️ **Disclaimer:** This report is a fictionalized case study based on an unsolicited good-faith external security assessment. All domain names, IP addresses, service names, internal hostnames, geographic data layers, and technical identifiers have been replaced with synthetic placeholders to protect the confidentiality of the assessed organization. This document follows Coordinated Vulnerability Disclosure (CVD) principles as described in *Gray Hat Hacking, 6th Edition*. No real infrastructure details, exploit paths, or sensitive data are disclosed.
+>  **Disclaimer:** This report is a fictionalized case study based on an unsolicited good-faith external security assessment. All domain names, IP addresses, service names, internal hostnames, geographic data layers, and technical identifiers have been replaced with synthetic placeholders to protect the confidentiality of the assessed organization. This document follows Coordinated Vulnerability Disclosure (CVD) principles as described in *Gray Hat Hacking, 6th Edition*. No real infrastructure details, exploit paths, or sensitive data are disclosed.
 
 ---
 
@@ -18,7 +18,7 @@ An external security assessment was conducted on the web infrastructure of a mun
 
 The assessment identified **15 subdomains**, **7 IP addresses**, and **6 findings** — **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
 
-⚠️ **Critical context:** The technology stack runs on software versions with **several known critical CVEs** — including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — representing unauthenticated remote code execution vectors confirmed applicable via version fingerprinting. A total of **18 CVEs were screened** across the GeoServer + Jetty + Apache + Postfix stack. While these were not exploited during this passive assessment, their presence significantly elevates the risk profile of the exposed endpoints if left unpatched.
+ **Critical context:** The technology stack runs on software versions with **several known critical CVEs** — including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)** — representing unauthenticated remote code execution vectors confirmed applicable via version fingerprinting. A total of **18 CVEs were screened** across the GeoServer + Jetty + Apache + Postfix stack. While these were not exploited during this passive assessment, their presence significantly elevates the risk profile of the exposed endpoints if left unpatched.
 
 The most significant finding involves a **severely outdated GeoServer instance (deployed 2015–2017, unpatched)**. The WFS endpoint is exposed without authentication, allowing bulk download of municipal records spanning multiple decades. The underlying software version carries **several documented CVEs**, including **CVE-2022-24816 (CVSS 10.0 — unauthenticated RCE)** and **CVE-2024-36401 (CVSS 9.8 — unauthenticated RCE via XPath injection)** — both confirmed applicable to the deployed version via fingerprinting, though not exploited. If exploited, any of these could grant an attacker full server takeover.
 
@@ -269,9 +269,9 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 ## 6. Prioritized Remediation Roadmap
 
 ### Immediate (0–7 days)
-1. ✅ Implement authentication on all GeoServer WFS endpoints
-2. ✅ Fix CORS configuration on the production API
-3. ✅ Suppress verbose error messages in GeoServer
+1.  Implement authentication on all GeoServer WFS endpoints
+2.  Fix CORS configuration on the production API
+3.  Suppress verbose error messages in GeoServer
 
 ### Short-term (1–4 weeks)
 4. Configure HTTP security headers on all web-facing services

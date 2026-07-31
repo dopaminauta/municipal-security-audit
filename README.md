@@ -8,11 +8,11 @@
 
 **Security assessment case study** — demonstrating real-world vulnerability research, OSINT methodology, and responsible disclosure practices.
 
-> ⚠️ **Important:** This repository contains a **fictionalized case study** based on an unsolicited good-faith external security assessment, prepared for professional portfolio purposes. All technical information, domain names, IP addresses, service identifiers, geographic data layers, internal hostnames, and attack vectors have been **replaced with synthetic or simulated data** to protect the confidentiality of the assessed organization, in accordance with Coordinated Vulnerability Disclosure (CVD) principles. The original confidential report was delivered to the system owner and a standard CVD remediation window elapsed before publication.
+>  **Important:** This repository contains a **fictionalized case study** based on an unsolicited good-faith external security assessment, prepared for professional portfolio purposes. All technical information, domain names, IP addresses, service identifiers, geographic data layers, internal hostnames, and attack vectors have been **replaced with synthetic or simulated data** to protect the confidentiality of the assessed organization, in accordance with Coordinated Vulnerability Disclosure (CVD) principles. The original confidential report was delivered to the system owner and a standard CVD remediation window elapsed before publication.
 
 ---
 
-## 📋 Overview
+##  Overview
 
 This case study demonstrates a complete external security assessment workflow: from reconnaissance and service fingerprinting through vulnerability analysis, severity scoring, and prioritized remediation planning.
 
@@ -22,16 +22,16 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 ---
 
-## 🎯 Key Findings
+##  Key Findings
 
 | Severity | Count | Category |
 |----------|:-----:|----------|
-| ⚠️ Unconfirmed CVE Exposure (version-matched) | 4 | CVE-2022-24816 (10.0), CVE-2024-36401 (9.8), CVE-2023-35042 (9.8), CVE-2023-25157 (9.8) — GeoServer RCE & SQLi vectors, not exploited |
-| ⚠️ Potentially Applicable CVE | 1 | CVE-2024-38473 (8.1) — Apache HTTPd, version range overlap, unconfirmed |
+|  Unconfirmed CVE Exposure (version-matched) | 4 | CVE-2022-24816 (10.0), CVE-2024-36401 (9.8), CVE-2023-35042 (9.8), CVE-2023-25157 (9.8) — GeoServer RCE & SQLi vectors, not exploited |
+|  Potentially Applicable CVE | 1 | CVE-2024-38473 (8.1) — Apache HTTPd, version range overlap, unconfirmed |
 | 🟡 Verified Finding (CVSS 5.3) | 2 | Unauthenticated GeoServer WFS data exposure, CORS misconfiguration on production API |
 | 🟡 Low (CVSS 2.0) | 2 | Information leakage via errors, insecure cookie configuration |
 | ⚪ Compliance Observation | 1 | Cross-border health data hosting — regulatory risk |
-| 🟢 Info | 1 | Missing HTTP security headers (9 total) |
+|  Info | 1 | Missing HTTP security headers (9 total) |
 
 **18 CVEs screened** via version fingerprinting across GeoServer + Jetty + Apache + Postfix. Multiple RCE vectors identified in the deployed software stack (not exploited — applicability confirmed via version match only).
 
@@ -53,13 +53,13 @@ A detailed confidential report was delivered to the system owner prior to the pu
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 municipal-security-audit/
-├── README.md                      ← Portfolio overview & methodology
-├── SECURITY_AUDIT_REPORT.md       ← Full case study report (fictionalized)
-└── LICENSE                        ← MIT License
+├── README.md                      <- Portfolio overview & methodology
+├── SECURITY_AUDIT_REPORT.md       <- Full case study report (fictionalized)
+└── LICENSE                        <- MIT License
 ```
 
 ---
@@ -78,7 +78,7 @@ municipal-security-audit/
 
 ---
 
-## 🛡️ Ethics & Coordinated Disclosure
+##  Ethics & Coordinated Disclosure
 
 This case study follows **Coordinated Vulnerability Disclosure (CVD)** as described in *Gray Hat Hacking, 6th Edition*:
 
@@ -90,7 +90,7 @@ This case study follows **Coordinated Vulnerability Disclosure (CVD)** as descri
 
 ---
 
-## 📊 Assessment Metrics (Fictionalized)
+##  Assessment Metrics (Fictionalized)
 
 | Metric | Value |
 |--------|:-----:|
@@ -105,7 +105,7 @@ This case study follows **Coordinated Vulnerability Disclosure (CVD)** as descri
 
 ## 📄 Full Case Study
 
-→ **[SECURITY_AUDIT_REPORT.md](./SECURITY_AUDIT_REPORT.md)**
+-> **[SECURITY_AUDIT_REPORT.md](./SECURITY_AUDIT_REPORT.md)**
 
 ---
 
