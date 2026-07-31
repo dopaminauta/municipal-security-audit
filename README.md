@@ -109,10 +109,9 @@ This case study follows **Coordinated Vulnerability Disclosure (CVD)** as descri
 
 ---
 
-
 ---
 
-*Axel Feduzka — Offensive Security*
-*Honesty in every finding.*
-*Curiosity in every dig.*
-*Dedication in every delivery.*
+Axel Feduzka — Offensive Security
+Honesty in every finding.
+Curiosity in every dig.
+Dedication in every delivery.
