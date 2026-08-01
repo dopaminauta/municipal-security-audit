@@ -31,8 +31,21 @@ LICENSE                   - MIT
 | 5 | Session cookies missing security attributes | Low (2.0) |
 | 6 | Missing HTTP security headers | Info |
 
+## Skills demonstrated
+| Domain | Techniques |
+|--------|------------|
+| OSINT | Certificate transparency (crt.sh), Shodan InternetDB, DNS enumeration, WHOIS, gau, Wayback |
+| Web security | CORS policy analysis, CVSS 3.1 scoring, HTTP security-header auditing, session review |
+| Vulnerability research | CVE-to-version matching, GeoServer attack-surface analysis, CWE mapping |
+| Network recon | nmap service discovery, tech fingerprinting (whatweb), nuclei (lab only) |
+| Compliance & risk | Cross-border data-protection assessment, sensitive-data classification |
+| Technical writing | Executive summaries, CVSS-justified findings, prioritized remediation roadmaps |
+
 ## Standards referenced
 OWASP Testing Guide v4 - NIST SP 800-115 - OSSTMM 3.0
+
+## Author
+**Axel Feduzka** · GitHub [@dopaminauta](https://github.com/dopaminauta) · dominguezfya@gmail.com
 
 ---
 *Synthetic educational content. No exploit code against live systems, no real target data.*

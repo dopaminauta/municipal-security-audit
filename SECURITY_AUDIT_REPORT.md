@@ -3,7 +3,7 @@
 
 **Report ID:** LAB-CS-001
 **Type:** Methodology demonstration on a synthetic/lab scenario
-**Author:** Independent Security Researcher (portfolio)
+**Author:** Axel Feduzka (github.com/dopaminauta)
 **Classification:** Public - Educational Case Study
 
 > **What this is:** A constructed, fully synthetic lab scenario built to demonstrate an external-assessment methodology end to end: reconnaissance, service fingerprinting, CVE correlation, CVSS scoring, and prioritized remediation writing. **The target, its infrastructure, subdomains, IPs, and all findings below are fabricated for teaching purposes. No real organization was assessed, contacted, or scanned to produce this document.** Because the environment is a lab under the author's control, active tooling (nmap, nuclei) is used freely and described honestly.
