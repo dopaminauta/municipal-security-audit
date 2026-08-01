@@ -49,3 +49,7 @@ OWASP Testing Guide v4 - NIST SP 800-115 - OSSTMM 3.0
 
 ---
 *Synthetic educational content. No exploit code against live systems, no real target data.*
+
+---
+
+> *Solve et Coagula — bound by EMET, driven by AHAVA.*
