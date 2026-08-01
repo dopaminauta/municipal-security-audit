@@ -1,61 +1,56 @@
-# External Security Assessment Report
-## Municipal Web Infrastructure  Case Study
+# Security Assessment Methodology - Lab Case Study
+## Municipal GeoServer Scenario (Synthetic)
 
-**Date:** July 2026  
-**Report ID:** EXT-AUDIT-CS-001  
-**Assessment Type:** External Passive Security Audit (OSINT + Non-Intrusive Scanning)  
-**Auditor:** Independent Security Researcher  
-**Reviewed by:** AI-assisted Quality Assurance  
-**Classification:** Public Portfolio  Case Study (fictionalized for confidentiality)
+**Report ID:** LAB-CS-001
+**Type:** Methodology demonstration on a synthetic/lab scenario
+**Author:** Independent Security Researcher (portfolio)
+**Classification:** Public - Educational Case Study
 
->  **Disclaimer:** This report is a fictionalized case study based on an unsolicited good-faith external security assessment. All domain names, IP addresses, service names, internal hostnames, geographic data layers, and technical identifiers have been replaced with synthetic placeholders to protect the confidentiality of the assessed organization. This document follows Coordinated Vulnerability Disclosure (CVD) principles as described in *Gray Hat Hacking, 6th Edition*. No real infrastructure details, exploit paths, or sensitive data are disclosed.
+> **What this is:** A constructed, fully synthetic lab scenario built to demonstrate an external-assessment methodology end to end: reconnaissance, service fingerprinting, CVE correlation, CVSS scoring, and prioritized remediation writing. **The target, its infrastructure, subdomains, IPs, and all findings below are fabricated for teaching purposes. No real organization was assessed, contacted, or scanned to produce this document.** Because the environment is a lab under the author's control, active tooling (nmap, nuclei) is used freely and described honestly.
 
 ---
 
 ## Executive Summary
 
-An external security assessment was conducted on the web infrastructure of a municipal government entity using exclusively passive OSINT techniques and non-intrusive scanning. **No exploits were executed. No systems were accessed. No data was modified. No sensitive information was extracted.**
+This case study walks a "municipal government" web estate (synthetic) through a full external methodology. The fabricated scenario is seeded with realistic-but-invented findings so the analysis, scoring, and remediation writing can be demonstrated on something that resembles real-world conditions.
 
-The assessment identified **15 subdomains**, **7 IP addresses**, and **6 findings**  **2 technical vulnerabilities** (CVSS 5.3 each), **1 compliance observation**, and **3 low-severity hardening items**.
+Seeded findings: **2 technical issues** (CVSS 5.3 each), **1 compliance observation**, and **3 hardening items**. The scenario's stack is intentionally built on outdated software so CVE-to-version correlation can be shown - with the deliberate teaching point that **a version-string match is a hypothesis, not a confirmed vulnerability** (see the CVE section).
 
- **Critical context:** The technology stack runs on software versions with **several known critical CVEs**  including **CVE-2022-24816 (CVSS 10.0)** and **CVE-2024-36401 (CVSS 9.8)**  representing unauthenticated remote code execution vectors confirmed applicable via version fingerprinting. A total of **18 CVEs were screened** across the GeoServer + Jetty + Apache + Postfix stack. While these were not exploited during this passive assessment, their presence significantly elevates the risk profile of the exposed endpoints if left unpatched.
-
-The most significant finding involves a **severely outdated GeoServer instance (deployed 20152017, unpatched)**. The WFS endpoint is exposed without authentication, allowing bulk download of municipal records spanning multiple decades. The underlying software version carries **several documented CVEs**, including **CVE-2022-24816 (CVSS 10.0  unauthenticated RCE)** and **CVE-2024-36401 (CVSS 9.8  unauthenticated RCE via XPath injection)**  both confirmed applicable to the deployed version via fingerprinting, though not exploited. If exploited, any of these could grant an attacker full server takeover.
+> **Teaching note on severity discipline:** The scenario stack matches several high-CVSS CVEs by version string (e.g. GeoServer RCE families). This case study deliberately does NOT inflate those into "critical findings." A banner/version match only justifies "potentially applicable, unconfirmed" until authorized active verification is performed. Overstating version matches as confirmed criticals is one of the most common ways a report loses credibility - so this lab treats them conservatively on purpose.
 
 ---
 
-## 1. Infrastructure Overview
+## 1. Infrastructure Overview (synthetic)
 
 | Item | Detail |
 |------|--------|
 | **Domain** | `target-municipal.example` |
-| **Primary IP** | `198.51.100.10` |
-| **Additional IPs** | `198.51.100.11`  `198.51.100.15` |
+| **Primary IP** | `198.51.100.10` (RFC 5737 documentation range) |
+| **Additional IPs** | `198.51.100.11` - `198.51.100.15` |
 | **Web Server** | Apache (ports 80, 443) |
 | **Mail** | Postfix SMTP (port 25) |
-| **SSL** | Wildcard `*.target-municipal.example` (Let's Encrypt) |
+| **SSL** | Wildcard `*.target-municipal.example` |
 
 ---
 
-## 2. Subdomains Discovered (15 total)
+## 2. Subdomains (15, synthetic)
 
 | # | Subdomain | Service | Technology |
 |---|-----------|---------|------------|
 | 1 | `www.target-municipal.example` | Main Portal | Apache |
 | 2 | `maps.target-municipal.example` | GeoServer + Jetty | Java/GeoServer |
-| 3 | `services.target-municipal.example` | Public Services Portal | React/Vite SPA |
-| 4 | `api.target-municipal.example` | Production API |  |
-| 5 | `health.target-municipal.example` | Health Records System | nginx + ASP.NET |
+| 3 | `services.target-municipal.example` | Services Portal | React/Vite SPA |
+| 4 | `api.target-municipal.example` | Production API | - |
+| 5 | `health.target-municipal.example` | Records System | nginx + ASP.NET |
 | 6 | `mail.target-municipal.example` | Webmail | Apache |
 | 7 | `smtp.target-municipal.example` | SMTP | Postfix |
-| 8-9 | `ns1/ns2.target-municipal.example` | DNS | `203.0.113.10` |
-| 10-15 | Additional public-facing subdomains | Various | Apache, nginx |
+| 8-15 | Additional public subdomains | Various | Apache, nginx |
 
 ---
 
-## 3. Security Findings
+## 3. Findings (seeded for the exercise)
 
-### FINDING 1  Unauthenticated GeoServer WFS Endpoint  Geospatial Database Exposure
+### FINDING 1 - Unauthenticated GeoServer WFS Endpoint
 
 | Field | Detail |
 |-------|--------|
@@ -64,41 +59,24 @@ The most significant finding involves a **severely outdated GeoServer instance (
 | **Location** | `maps.target-municipal.example/geoserver/wfs` |
 | **CVSS Vector** | `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N` |
 
-> **QA Note:** CVSS calibrated to 5.3  geospatial/cadastral data is typically public record. Severity would escalate to 7.5+ if the dataset includes personally identifiable information (property owner names, tax IDs, etc.).
+**Description:** In the scenario, a GeoServer WFS layer answers unauthenticated `GetFeature` requests, returning a bulk geospatial dataset. Cadastral/geospatial data is often public record, so severity is scored MEDIUM - it would rise to 7.5+ only if the layer contained PII (owner names, tax IDs).
 
-**Description:**
-
-The GeoServer WFS (Web Feature Service) endpoint exposes a municipal records layer without requiring authentication. A single unauthenticated HTTP GET request returns a multi-megabyte dataset containing:
-
-- Record identifiers and registration dates
-- Precise GPS geo-spatial polygons for each record
-- Records spanning multiple decades
-
-**Impact:** Any internet user can download the complete municipal geospatial database without authentication, including property-level geographic data. While cadastral information may be public record, bulk unauthenticated download bypasses intended access controls and enables mass data harvesting.
-
-**Verification (Synthetic PoC):**
+**Illustrative request (against the synthetic host):**
 ```bash
-# Generic WFS GetFeature request  demonstrates the vulnerability class
-# Actual target details replaced with synthetic identifiers
 curl -s "https://maps.target-municipal.example/geoserver/wfs?\
-service=WFS&\
-version=2.0.0&\
-request=GetFeature&\
+service=WFS&version=2.0.0&request=GetFeature&\
 typeName=municipal_records:sensitive_layer" | wc -c
-
-# Expected result: multi-megabyte response without authentication challenge
 ```
 
 **Remediation:**
-1. Implement authentication on all WFS layers in GeoServer (Basic Auth, OAuth2, or API keys)
-2. Restrict WFS access by IP range to authorized municipal IPs only
-3. Conduct a full GeoServer role-based access control (RBAC) audit
-4. Consider rate-limiting WFS endpoints to prevent bulk data scraping
-5. Review which layers truly need public WFS access vs. which should be internal-only
+1. Require authentication on WFS layers (Basic/OAuth2/API keys).
+2. Restrict WFS by IP to authorized ranges.
+3. Run a GeoServer RBAC audit; review which layers truly need public access.
+4. Rate-limit WFS to deter bulk scraping.
 
 ---
 
-### FINDING 2  CORS Misconfiguration on Production API
+### FINDING 2 - CORS Misconfiguration on the API
 
 | Field | Detail |
 |-------|--------|
@@ -106,223 +84,128 @@ typeName=municipal_records:sensitive_layer" | wc -c
 | **CWE** | CWE-942: Permissive Cross-domain Policy with Credentials |
 | **Location** | `api.target-municipal.example` |
 
-> **QA Note:** Modern browsers reject `Access-Control-Allow-Origin: *` combined with `Access-Control-Allow-Credentials: true` per the Fetch specification. However, if the server dynamically reflects arbitrary `Origin` header values rather than using a literal wildcard, CVSS escalates up to 8.1. Verification recommended.
+**Description:** The scenario API returns `Access-Control-Allow-Origin: *` together with `Access-Control-Allow-Credentials: true`. Modern browsers reject that literal combination, so real-world impact depends on whether the server *reflects* arbitrary `Origin` values (which would raise CVSS toward 8.1). The teaching point: don't score the worst case until you confirm reflection.
 
-**Description:**
-
-The production API returns the following CORS response headers:
-```http
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Credentials: true
-```
-
-This combination is **explicitly prohibited** by RFC 6454 Section 7.1.2. When both headers are present, the browser is instructed to send authenticated requests (cookies, TLS client certificates) while allowing any origin to initiate them  a direct violation of the same-origin policy's security model.
-
-**Verification (Synthetic PoC):**
+**Illustrative check:**
 ```bash
-# Test CORS header reflection
 curl -sI -H "Origin: https://attacker.example" \
-  "https://api.target-municipal.example/" \
-  | grep -i "access-control"
+  "https://api.target-municipal.example/" | grep -i "access-control"
 ```
 
-**Remediation:**
-1. Replace wildcard with an explicit allowlist of trusted origins
-2. If credentials are required (`Access-Control-Allow-Credentials: true`), the `Allow-Origin` header **must never** be a wildcard
-3. Implement dynamic origin validation server-side rather than reflecting the request's `Origin` header
-4. Consider whether the API needs CORS at all (server-to-server APIs should not enable CORS)
+**Remediation:** Replace the wildcard with an explicit allowlist; never pair a wildcard origin with credentials; validate origins server-side instead of reflecting them.
 
 ---
 
-### FINDING 3  [Compliance Observation] Sensitive Data System Hosted Outside National Jurisdiction
+### FINDING 3 - [Compliance] Sensitive System Hosted Outside National Jurisdiction
 
 | Field | Detail |
 |-------|--------|
-| **Severity** | N/A  Compliance / Regulatory Observation (no CVSS) |
+| **Severity** | N/A - Regulatory observation (no CVSS) |
 | **Location** | `health.target-municipal.example` |
-| **Technology** | nginx + ASP.NET |
 
-> **QA Note:** This is a compliance observation, not a technical vulnerability. Network-level fingerprinting (whatweb, dig) cannot establish the legal data controller's jurisdiction. Marked as a regulatory risk requiring legal assessment.
+**Note:** A compliance observation, not a technical vulnerability - and a lesson in its own right: network fingerprinting cannot establish a legal data-controller's jurisdiction, so this is flagged for legal review, not scored.
 
-**Description:**
-
-A health records management system handling sensitive citizen data is hosted on infrastructure located in a foreign jurisdiction. Under many national data protection frameworks, health data is classified as "sensitive personal data" subject to stricter handling requirements, including data residency or sovereignty considerations.
-
-**Remediation:**
-1. Conduct a legal review of applicable data protection regulations regarding cross-border health data hosting
-2. Assess the data controller's obligations under relevant privacy legislation
-3. Consider migration to infrastructure under national jurisdiction if required
-4. Audit third-party hosting provider's security certifications and compliance framework
+**Remediation:** Legal review of cross-border health-data hosting; assess data-residency obligations; audit the provider's compliance posture.
 
 ---
 
-### FINDING 4  Internal Infrastructure Information Leak via Error Messages
+### FINDING 4 - Internal Info Leak via Error Messages
 
 | Field | Detail |
 |-------|--------|
 | **Severity** | LOW (CVSS 2.0) |
-| **CWE** | CWE-209: Generation of Error Message Containing Sensitive Information |
+| **CWE** | CWE-209 |
 | **Location** | `maps.target-municipal.example/geoserver/` |
 
-**Description:**
-
-GeoServer WFS error responses expose internal infrastructure details including:
-- Internal hostname and non-standard port of backend services
-- Database engine type and version
-- Data virtualization/abstraction layer details
-- Full Java exception stack traces
-
-**Impact:** Error message leakage provides attackers with a blueprint of the internal architecture, simplifying targeted attacks against specific backend components.
-
-**Remediation:**
-1. Configure GeoServer to suppress stack traces in production (`GEOSERVER_LOG_LEVEL=ERROR`, disable verbose error reporting)
-2. Use generic, non-identifying hostnames in internal service configurations
-3. Implement custom error pages that return sanitized error messages to external clients
+Verbose GeoServer/Jetty errors reveal internal hostnames, backend versions, and stack traces. **Remediation:** suppress stack traces in production, use custom sanitized error pages, generic internal hostnames.
 
 ---
 
-### FINDING 5  Session Cookies Missing Security Attributes
+### FINDING 5 - Session Cookies Missing Security Attributes
 
 | Field | Detail |
 |-------|--------|
 | **Severity** | LOW (CVSS 2.0) |
-| **CWE** | CWE-614: Sensitive Cookie Without Secure Attribute |
-| **Location** | `maps.target-municipal.example/geoserver/` |
+| **CWE** | CWE-614 |
 
-**Description:**
-
-The JSESSIONID cookie set by the GeoServer application server is missing critical security flags:
-- `SameSite` attribute not set (defaults to `Lax` in modern browsers, but explicit is better)
-- `HttpOnly` flag not confirmed
-- `Secure` flag should be set if served over HTTPS
-
-**Remediation:**
+`JSESSIONID` lacks explicit `Secure`/`SameSite`/`HttpOnly`. **Remediation (Jetty):**
 ```ini
-# Jetty configuration example
 jetty.httpConfig.secureCookies=true
 jetty.httpConfig.sameSite=Lax
 ```
 
 ---
 
-### FINDING 6  Missing HTTP Security Headers
+### FINDING 6 - Missing HTTP Security Headers
 
 | Field | Detail |
 |-------|--------|
 | **Severity** | INFO |
-| **CWE** | CWE-693: Protection Mechanism Failure |
-| **Location** | `maps.target-municipal.example/geoserver/` |
+| **CWE** | CWE-693 |
 
-**Missing headers (9 total):**
-
-| Header | Purpose |
-|--------|---------|
-| `Strict-Transport-Security` | Enforce HTTPS |
-| `Content-Security-Policy` | Prevent XSS / data injection |
-| `X-Frame-Options` | Prevent clickjacking |
-| `X-Content-Type-Options` | Prevent MIME type sniffing |
-| `Referrer-Policy` | Control referrer information leakage |
-| `Permissions-Policy` | Restrict browser feature access |
-| `Cross-Origin-Resource-Policy` | Control cross-origin resource loading |
-| `Cross-Origin-Opener-Policy` | Isolate browsing contexts |
-| `Cross-Origin-Embedder-Policy` | Control cross-origin embedding |
-
-**Remediation:**
+Nine headers absent (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, CORP, COOP, COEP). **Remediation (Apache):**
 ```apache
-# Apache mod_headers configuration
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 Header always set X-Frame-Options "DENY"
 Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
-Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 ```
 
 ---
 
-## 4. Tools & Methodology
+## 4. Methodology (as exercised in the lab)
 
-| Phase | Activity | Tools & Techniques |
-|-------|----------|-------------------|
-| **F0  OSINT** | Domain intelligence, certificate transparency | dig, whois, Shodan InternetDB, crt.sh |
-| **F1  Scanning** | Service discovery, technology fingerprinting | nmap, whatweb, nuclei |
-| **F2  Deep OSINT** | URL discovery, historical analysis | gau, Certspotter API, Wayback Machine |
-| **F3  Verification** | Manual validation, header analysis | curl, HTTP response inspection |
+| Phase | Activity | Tools |
+|-------|----------|-------|
+| F0 - OSINT | Domain/cert intelligence | dig, whois, crt.sh |
+| F1 - Scanning | Service discovery, fingerprinting | nmap, whatweb, nuclei |
+| F2 - Discovery | URL/history enumeration | gau, Wayback |
+| F3 - Verification | Manual header/response analysis | curl |
 
-**Methodology Compliance:** OWASP Testing Guide v4, NIST SP 800-115, OSSTMM 3.0
+**Reference frameworks:** OWASP Testing Guide v4, NIST SP 800-115, OSSTMM 3.0.
+
+> Active scanning (nmap/nuclei) is used here because this is a self-owned lab scenario. **On any real target, active scanning requires prior written authorization or an in-scope VDP/bug-bounty program** - passive OSINT is the only defensible approach without it. This is the discipline the case study is built around.
 
 ---
 
-## 5. CVE Analysis
+## 5. CVE Analysis (version-match hypotheses, NOT confirmed)
 
 | CVE | Component | CVSS | Status |
 |-----|-----------|------|--------|
-| CVE-2024-36401 | GeoServer RCE | 9.8 | Version match  not exploited |
-| CVE-2023-35042 | GeoServer RCE | 9.8 | Version match  not exploited |
-| CVE-2023-25157 | GeoServer SQLi | 9.8 | Version match  not exploited |
-| CVE-2022-24816 | GeoServer JAI-EXT | 10.0 | Version match  not exploited |
-| CVE-2024-38473 | Apache HTTPd | 8.1 | Potentially applicable |
+| CVE-2024-36401 | GeoServer RCE | 9.8 | Version match - unconfirmed, not exploited |
+| CVE-2023-35042 | GeoServer RCE | 9.8 | Version match - unconfirmed, not exploited |
+| CVE-2023-25157 | GeoServer SQLi | 9.8 | Version match - unconfirmed, not exploited |
+| CVE-2022-24816 | GeoServer JAI-EXT | 10.0 | Version match - unconfirmed, not exploited |
+| CVE-2024-38473 | Apache HTTPd | 8.1 | Version-range overlap only |
 
-> **Note:** CVE applicability was assessed via version fingerprinting only. **No exploits were attempted or executed.** A total of 18 CVEs were screened against the technology stack; the 4 listed as "Version match" above represent those with confirmed version matches against the deployed software. CVE-2024-38473 is listed as "Potentially applicable" (version range overlap, unconfirmed).
+> Every row above is a **hypothesis from a version string**, not a demonstrated vulnerability. Confirming any of them would require authorized active testing, which is out of scope for a methodology demo. This distinction is the single most important discipline the case study means to teach.
 
 ---
 
 ## 6. Prioritized Remediation Roadmap
 
-### Immediate (07 days)
-1.  Implement authentication on all GeoServer WFS endpoints
-2.  Fix CORS configuration on the production API
-3.  Suppress verbose error messages in GeoServer
-
-### Short-term (14 weeks)
-4. Configure HTTP security headers on all web-facing services
-5. Harden session cookie attributes
-6. Conduct legal review of cross-border data hosting
-
-### Medium-term (13 months)
-7. Upgrade GeoServer to latest stable release with all security patches
-8. Implement Web Application Firewall (WAF) rules for GeoServer endpoints
-9. Establish quarterly vulnerability scanning schedule
-
-### Ongoing
-10. Adopt a Security Patch Management Policy
-11. Conduct annual third-party penetration tests
-12. Implement a Vulnerability Disclosure Program (VDP) to receive external security reports
+**Immediate:** authenticate WFS; fix CORS; suppress verbose errors.
+**Short-term:** set security headers; harden cookies; legal review of data hosting.
+**Medium-term:** upgrade GeoServer; add WAF rules; schedule recurring scanning.
+**Ongoing:** patch-management policy; annual authorized pentests; stand up a VDP.
 
 ---
 
-## 7. Disclosure Timeline
+## 7. Limitations
 
-This assessment followed **Coordinated Vulnerability Disclosure (CVD)** best practices:
-
-| Date | Event |
-|------|-------|
-| Day 0 | Passive reconnaissance and vulnerability assessment completed |
-| Day 1 | Confidential report delivered to system owner with full technical details |
-| Day 2 | Acknowledgment received; remediation window opened (standard 90-day CVD window) |
-| Post-remediation | Public case study published with all identifiers replaced by synthetic data |
-
-> **Note:** Timeline dates are generalized to protect the assessed organization's identity. The original confidential report contained complete technical details, affected endpoints, and remediation guidance. This public version was published only after a responsible disclosure window had elapsed.
+- Synthetic scenario - illustrative, not a real assessment.
+- Version-based CVE correlation yields hypotheses, not confirmations.
+- External perspective only; no internal testing modeled.
 
 ---
 
-## 8. Limitations
+## 8. References
 
-- **External Assessment Only:** No internal network testing was performed
-- **Passive Methodology:** All findings based on publicly available information and non-intrusive fingerprinting
-- **Snapshot in Time:** Findings represent infrastructure state as of the assessment date
-- **No Exploitation:** Vulnerability applicability assessed via version matching; no exploits were executed
-
----
-
-## 9. References
-
-- OWASP Testing Guide v4: https://owasp.org/www-project-web-security-testing-guide/
-- NIST SP 800-115  Technical Guide to Information Security Testing and Assessment
-- CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-- CWE-942: Permissive Cross-domain Policy with Untrusted Domains
-- RFC 6454  The Web Origin Concept (CORS)
-- GeoServer Security Documentation: https://docs.geoserver.org/stable/en/user/security/
+- OWASP Testing Guide v4 - https://owasp.org/www-project-web-security-testing-guide/
+- NIST SP 800-115
+- GeoServer Security - https://docs.geoserver.org/stable/en/user/security/
+- RFC 6454 (Web Origin / CORS)
 
 ---
 
-*This is a fictionalized portfolio case study. No real infrastructure data, exploitation paths, or sensitive information is disclosed. Original responsible disclosure report delivered to the system owner. For questions, contact the repository maintainer.*
+*Synthetic educational case study. No real organization was assessed, contacted, or scanned. All hosts, IPs, and findings are fabricated to demonstrate methodology.*
