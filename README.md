@@ -1,27 +1,37 @@
-# Security Assessment Methodology - Lab Case Study (Synthetic Municipal GeoServer)
+# Security Assessment Methodology - Municipal Public Surface (Authorized, Anonymized)
 
 ![type](https://img.shields.io/badge/type-methodology%20case%20study-blue)
-![scenario](https://img.shields.io/badge/scenario-synthetic%20%2F%20lab-purple)
+![scope](https://img.shields.io/badge/scope-authorized%20assessment-green)
 ![exploitation](https://img.shields.io/badge/exploitation-none-brightgreen)
 
-**A fully synthetic, educational case study** that demonstrates an end-to-end external security assessment methodology - reconnaissance, service fingerprinting, CVE correlation, CVSS scoring, and prioritized remediation writing - on a **fabricated "municipal" web estate**.
+**An external assessment of a municipal organization's public surface**, carried out with written authorization from its systems team.
 
-> **No real organization was assessed, contacted, or scanned to produce this repo.** The target, subdomains, IPs (RFC 5737 documentation ranges), and every finding are invented to exercise the workflow. Because the scenario is a self-owned lab, active tooling (nmap, nuclei) is used and described honestly - see the methodology note about why that is only acceptable on lab/authorized targets.
+The organization is not named. Infrastructure details are generalized or replaced with documentation ranges so the repository is safe to publish, while the methodology and the reasoning behind each severity decision stay intact.
+
+## Scope and authorization
+
+- Written authorization from the organization's systems area, on file.
+- Passive OSINT and analysis of publicly reachable surface. No exploitation, no authenticated access, no data extraction.
+- Findings were shared with the organization's team before anything was published.
+- What this repository publishes: methodology, severity reasoning, and remediation structure. Not the target identity, not live host details.
 
 ## What it demonstrates
-- Structuring an external assessment (OSINT -> fingerprinting -> CVE correlation -> scoring -> remediation).
-- **Severity discipline:** treating version-string CVE matches as *hypotheses*, not confirmed criticals.
-- Clear, CVSS-justified findings and a prioritized remediation roadmap.
-- Knowing the boundary: active scanning belongs on lab or authorized targets only; real unauthorized targets get passive OSINT at most, or nothing.
+
+- Structuring an external assessment end to end: OSINT, fingerprinting, CVE correlation, CVSS scoring, prioritized remediation.
+- **Severity discipline:** version-string CVE matches are treated as *hypotheses*, not confirmed criticals.
+- Clear, CVSS-justified findings and a remediation roadmap ordered by risk.
+- Knowing the boundary: passive OSINT on a real target requires authorization, and nothing here goes past what that authorization covered.
 
 ## Contents
+
 ```
 README.md                 - this overview
-SECURITY_AUDIT_REPORT.md  - the full synthetic case-study report
+SECURITY_AUDIT_REPORT.md  - the assessment report (target details generalized)
 LICENSE                   - MIT
 ```
 
-## Findings modeled (synthetic)
+## Findings (details generalized)
+
 | # | Finding | Severity |
 |---|---------|:--------:|
 | 1 | Unauthenticated GeoServer WFS exposure | Medium (5.3) |
@@ -29,27 +39,9 @@ LICENSE                   - MIT
 | 3 | Cross-border sensitive-data hosting (compliance) | Observation |
 | 4 | Verbose error / internal info leak | Low (2.0) |
 | 5 | Session cookies missing security attributes | Low (2.0) |
-| 6 | Missing HTTP security headers | Info |
+| 6 | Outdated CMS components pending version confirmation | Low (pending) |
 
-## Skills demonstrated
-| Domain | Techniques |
-|--------|------------|
-| OSINT | Certificate transparency (crt.sh), Shodan InternetDB, DNS enumeration, WHOIS, gau, Wayback |
-| Web security | CORS policy analysis, CVSS 3.1 scoring, HTTP security-header auditing, session review |
-| Vulnerability research | CVE-to-version matching, GeoServer attack-surface analysis, CWE mapping |
-| Network recon | nmap service discovery, tech fingerprinting (whatweb), nuclei (lab only) |
-| Compliance & risk | Cross-border data-protection assessment, sensitive-data classification |
-| Technical writing | Executive summaries, CVSS-justified findings, prioritized remediation roadmaps |
+## Notes
 
-## Standards referenced
-OWASP Testing Guide v4 - NIST SP 800-115 - OSSTMM 3.0
-
-## Author
-**Axel Feduzka** · GitHub [@dopaminauta](https://github.com/dopaminauta) · dominguezfya@gmail.com
-
----
-*Synthetic educational content. No exploit code against live systems, no real target data.*
-
----
-
-> *Solve et Coagula — bound by EMET, driven by AHAVA.*
+- Hostnames, IPs, and identifiers in the report are generalized or use RFC 5737 documentation ranges.
+- The report is a methodology document as much as a record: it keeps the reasoning, not the target's fingerprints.
