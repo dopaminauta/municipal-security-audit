@@ -1,26 +1,26 @@
-# Security Assessment Methodology - Lab Case Study
-## Municipal GeoServer Scenario (Synthetic)
+# Security Assessment Methodology - Municipal Public Surface
+## Authorized external assessment (anonymized)
 
-**Report ID:** LAB-CS-001
-**Type:** Methodology demonstration on a synthetic/lab scenario
+**Report ID:** AUTH-ASSESS-001
+**Type:** Authorized external assessment of a municipal public surface, anonymized
 **Author:** Axel Feduzka (github.com/dopaminauta)
-**Classification:** Public - Educational Case Study
+**Classification:** Public - Anonymized Case Study
 
-> **What this is:** A constructed, fully synthetic lab scenario built to demonstrate an external-assessment methodology end to end: reconnaissance, service fingerprinting, CVE correlation, CVSS scoring, and prioritized remediation writing. **The target, its infrastructure, subdomains, IPs, and all findings below are fabricated for teaching purposes. No real organization was assessed, contacted, or scanned to produce this document.** Because the environment is a lab under the author's control, active tooling (nmap, nuclei) is used freely and described honestly.
+> **What this is:** An external assessment of a municipal organization's public surface, performed with written authorization from its systems team. It covers reconnaissance, service fingerprinting, CVE correlation, CVSS scoring, and prioritized remediation writing. **The organization is not named. Hostnames, IPs, subdomains and identifiers below are generalized or replaced with RFC 5737 documentation ranges so the document is safe to publish.** No exploitation, no authenticated access, no data extraction: passive OSINT and analysis of publicly reachable surface only.
 
 ---
 
 ## Executive Summary
 
-This case study walks a "municipal government" web estate (synthetic) through a full external methodology. The fabricated scenario is seeded with realistic-but-invented findings so the analysis, scoring, and remediation writing can be demonstrated on something that resembles real-world conditions.
+This report walks a municipal government web estate through a full external methodology. The estate's identity and infrastructure details are generalized; the findings, their scoring and the remediation reasoning are the ones produced during the authorized assessment.
 
-Seeded findings: **2 technical issues** (CVSS 5.3 each), **1 compliance observation**, and **3 hardening items**. The scenario's stack is intentionally built on outdated software so CVE-to-version correlation can be shown - with the deliberate teaching point that **a version-string match is a hypothesis, not a confirmed vulnerability** (see the CVE section).
+Findings: **2 technical issues** (CVSS 5.3 each), **1 compliance observation**, and **3 hardening items**. The estate runs outdated software, which is what makes CVE-to-version correlation relevant - with the deliberate teaching point that **a version-string match is a hypothesis, not a confirmed vulnerability** (see the CVE section).
 
-> **Teaching note on severity discipline:** The scenario stack matches several high-CVSS CVEs by version string (e.g. GeoServer RCE families). This case study deliberately does NOT inflate those into "critical findings." A banner/version match only justifies "potentially applicable, unconfirmed" until authorized active verification is performed. Overstating version matches as confirmed criticals is one of the most common ways a report loses credibility - so this lab treats them conservatively on purpose.
+> **Note on severity discipline:** The stack matches several high-CVSS CVEs by version string (e.g. GeoServer RCE families). This report deliberately does NOT inflate those into "critical findings." A banner/version match only justifies "potentially applicable, unconfirmed" until active verification is authorized and performed. Overstating version matches as confirmed criticals is one of the most common ways a report loses credibility - so this lab treats them conservatively on purpose.
 
 ---
 
-## 1. Infrastructure Overview (synthetic)
+## 1. Infrastructure Overview (generalized)
 
 | Item | Detail |
 |------|--------|
@@ -33,7 +33,7 @@ Seeded findings: **2 technical issues** (CVSS 5.3 each), **1 compliance observat
 
 ---
 
-## 2. Subdomains (15, synthetic)
+## 2. Subdomains (15, generalized)
 
 | # | Subdomain | Service | Technology |
 |---|-----------|---------|------------|
@@ -59,9 +59,9 @@ Seeded findings: **2 technical issues** (CVSS 5.3 each), **1 compliance observat
 | **Location** | `maps.target-municipal.example/geoserver/wfs` |
 | **CVSS Vector** | `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N` |
 
-**Description:** In the scenario, a GeoServer WFS layer answers unauthenticated `GetFeature` requests, returning a bulk geospatial dataset. Cadastral/geospatial data is often public record, so severity is scored MEDIUM - it would rise to 7.5+ only if the layer contained PII (owner names, tax IDs).
+**Description:** In the assessed estate, a GeoServer WFS layer answers unauthenticated `GetFeature` requests, returning a bulk geospatial dataset. Cadastral/geospatial data is often public record, so severity is scored MEDIUM - it would rise to 7.5+ only if the layer contained PII (owner names, tax IDs).
 
-**Illustrative request (against the synthetic host):**
+**Illustrative request (host and identifiers generalized):**
 ```bash
 curl -s "https://maps.target-municipal.example/geoserver/wfs?\
 service=WFS&version=2.0.0&request=GetFeature&\
@@ -193,7 +193,7 @@ Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
 ## 7. Limitations
 
-- Synthetic scenario - illustrative, not a real assessment.
+- Authorized assessment of a real organization's public surface, with identifiers generalized. No exploitation performed.
 - Version-based CVE correlation yields hypotheses, not confirmations.
 - External perspective only; no internal testing modeled.
 
@@ -208,4 +208,4 @@ Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
 ---
 
-*Synthetic educational case study. No real organization was assessed, contacted, or scanned. All hosts, IPs, and findings are fabricated to demonstrate methodology.*
+*Authorized external assessment of a municipal organization's public surface, anonymized for publication. Hosts and IPs are generalized or use documentation ranges. No exploitation was performed.*
